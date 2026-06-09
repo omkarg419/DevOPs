@@ -40,13 +40,13 @@ jobs:
           key: ${{ secrets.EXCLOUD_SSH_KEY }}
           script: |
             #kill existing container
-            sudo docker rm -f $(docker ps -q --filter ancestor=jsdev8080/chaicode-node) || true
+            sudo docker rm -f chaicode-node || true
 
             #again pull the fresh image from docker hub
             sudo docker pull jsdev8080/chaicode-node
 
             #run docker run -d -p 8000:8000 jsdev8080/chaicode-node
-            sudo docker run -d -p 8000:8000 jsdev8080/chaicode-node
+            sudo docker run -d --name chaicode-node --restart unless-stopped -p 8000:8000 jsdev8080/chaicode-node
 
             #clean up unused images
             sudo docker image prune -f
