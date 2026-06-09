@@ -5,7 +5,7 @@ const app = express();
 app.get("/", (req, res) => {
 	res.json({
 		message: "Server is Healthy v4.5",
-		status: "GitHub Actions is working fine with Docker 🐬",
+		status: "GitHub Actions is working fine with Docker",
 	});
 });
 
