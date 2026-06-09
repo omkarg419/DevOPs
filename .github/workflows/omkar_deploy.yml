@@ -39,9 +39,14 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EXCLOUD_SSH_KEY }}
           script: |
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-            cd /home/ubuntu/DevOPs
-            git pull 
-            npm install
-            pm2 restart 0
+            #kill existing container
+            docker rm -f $(docker ps -q --filter ancestor=jsdev8080/chaicode-node) || true
+
+            #again pull the fresh image from docker hub
+            docker pull jsdev8080/chaicode-node
+
+            #run docker run -d -p 8000:8000 jsdev8080/chaicode-node
+            docker run -d -p 8000:8000 jsdev8080/chaicode-node
+
+            #clean up unused images
+            docker image prune -f
