@@ -1,11 +1,9 @@
 name: Deploy Node.js App to exCloud
 
-
 on:
   push:
     branches:
       - main
-
 
 jobs:
   deploy:
@@ -14,16 +12,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-    
+
       - name: Login to Docker Hub
         uses: docker/login-action@v4
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
-        
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
@@ -34,7 +32,7 @@ jobs:
 
       - name: Deploy on exCloud
         uses: appleboy/ssh-action@v1.0.3
-        with: 
+        with:
           host: 210.79.129.5
           username: ubuntu
           key: ${{ secrets.EXCLOUD_SSH_KEY }}
@@ -45,8 +43,8 @@ jobs:
             #again pull the fresh image from docker hub
             sudo docker pull jsdev8080/chaicode-node
 
-            #run docker run -d -p 8000:8000 jsdev8080/chaicode-node
-            sudo docker run -d --name chaicode-node --restart unless-stopped -p 8000:8000 jsdev8080/chaicode-node
+            #run docker run -d -p 80:8000 jsdev8080/chaicode-node
+            sudo docker run -d --name chaicode-node --restart unless-stopped -p 80:8000 jsdev8080/chaicode-node
 
             #clean up unused images
             sudo docker image prune -f
