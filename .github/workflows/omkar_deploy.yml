@@ -39,6 +39,6 @@ jobs:
           script: |
             cd /home/ubuntu/DevOPs
             git pull origin main
-            sudo docker-compose pull
-            sudo docker-compose up -d
+            sudo docker compose pull
+            sudo docker compose up -d
             sudo docker image prune -f
