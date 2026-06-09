@@ -3,7 +3,7 @@ import express from "express";
 const app = express();
 
 app.get("/", (req, res) => {
-	res.json({ message: "Server is Healthy v3.5" });
+	res.json({ message: "Server is Healthy v4.5" ,status: "GitHub Actions is working fine!" });
 });
 
 const PORT = process.env.PORT ?? 8000;
